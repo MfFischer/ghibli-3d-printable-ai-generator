@@ -41,10 +41,6 @@ interface BaseImage {
 
 export const generateImage = async (userPrompt: string, baseImage: BaseImage | null, style: string): Promise<string> => {
   try {
-    if (!HF_API_KEY) {
-      throw new Error("Hugging Face API key not configured. Please add VITE_HUGGINGFACE_API_KEY to your .env file.");
-    }
-
     const styleConfig = styleModels[style] || styleModels['Ghibli-esque'];
     const fullPrompt = getFullPrompt(userPrompt, style);
 
@@ -54,47 +50,30 @@ export const generateImage = async (userPrompt: string, baseImage: BaseImage | n
       console.warn("Image-to-image transformation not yet supported with Hugging Face. Using text-to-image instead.");
     }
 
-    // Call Hugging Face Inference API
-    const response = await fetch(
-      `https://api-inference.huggingface.co/models/${styleConfig.model}`,
-      {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${HF_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          inputs: fullPrompt,
-          parameters: {
-            negative_prompt: "blurry, low quality, distorted, deformed, ugly, bad anatomy, watermark, text, signature",
-            num_inference_steps: 30,
-            guidance_scale: 7.5,
-          }
-        }),
-      }
-    );
+    // Call our proxy server instead of HF API directly (to avoid CORS)
+    const response = await fetch('http://localhost:3001/api/generate-image', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: styleConfig.model,
+        prompt: fullPrompt,
+        parameters: {
+          negative_prompt: "blurry, low quality, distorted, deformed, ugly, bad anatomy, watermark, text, signature",
+          num_inference_steps: 30,
+          guidance_scale: 7.5,
+        }
+      }),
+    });
 
     if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Hugging Face API error: ${response.status} - ${errorText}`);
+      const errorData = await response.json();
+      throw new Error(errorData.error || `Proxy server error: ${response.status}`);
     }
 
-    // Response is a blob (image data)
-    const blob = await response.blob();
-
-    // Convert blob to base64
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (reader.result && typeof reader.result === 'string') {
-          resolve(reader.result);
-        } else {
-          reject(new Error("Failed to convert image to base64"));
-        }
-      };
-      reader.onerror = () => reject(new Error("Failed to read image blob"));
-      reader.readAsDataURL(blob);
-    });
+    const data = await response.json();
+    return data.image;
 
   } catch (error) {
     console.error("Error generating image:", error);

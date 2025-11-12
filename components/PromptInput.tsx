@@ -20,13 +20,18 @@ export const PromptInput: React.FC<PromptInputProps> = ({ prompt, setPrompt, onG
   return (
     <div className="w-full">
       <label htmlFor="prompt-input" className="block text-lg font-semibold text-ghibli-dark-brown mb-2">
-        {hasBaseImage ? "Describe what's in your reference image" : "Describe your creation"}
+        {hasBaseImage ? "Describe your uploaded image" : "Describe your creation"}
       </label>
       {hasBaseImage && (
-        <p className="text-sm text-ghibli-brown/80 mb-2 bg-ghibli-tan/20 p-2 rounded">
-          💡 <strong>Tip:</strong> Describe what you see in your uploaded image (e.g., "a cat sitting on a chair").
-          The AI will recreate it in your chosen style!
-        </p>
+        <div className="mb-2 bg-green-50 border-l-4 border-green-500 p-3 rounded">
+          <p className="text-sm text-green-800 font-semibold mb-1">
+            ✨ Image-to-Image Transformation Active!
+          </p>
+          <p className="text-xs text-green-700">
+            Your uploaded image will be transformed into your chosen art style.
+            Describe what's in the image for best results (e.g., "a cat sitting on a windowsill").
+          </p>
+        </div>
       )}
       <textarea
         id="prompt-input"

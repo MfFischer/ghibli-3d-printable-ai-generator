@@ -2,6 +2,14 @@ const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 
+// Import database functions (will be compiled from TypeScript)
+let db;
+try {
+  db = require('../dist-electron/services/database.js');
+} catch (err) {
+  console.warn('Database module not yet compiled:', err.message);
+}
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -152,3 +160,84 @@ ipcMain.handle('save-file-dialog', async (event, options) => {
   return result;
 });
 
+// Database IPC handlers
+ipcMain.handle('db-save-generation', async (event, prompt, style, imageUrl) => {
+  if (!db) return null;
+  try {
+    return db.saveGeneration(prompt, style, imageUrl);
+  } catch (err) {
+    console.error('Error saving generation:', err);
+    return null;
+  }
+});
+
+ipcMain.handle('db-get-generations', async (event, limit, offset) => {
+  if (!db) return [];
+  try {
+    return db.getGenerations(limit, offset);
+  } catch (err) {
+    console.error('Error getting generations:', err);
+    return [];
+  }
+});
+
+ipcMain.handle('db-get-favorites', async () => {
+  if (!db) return [];
+  try {
+    return db.getFavorites();
+  } catch (err) {
+    console.error('Error getting favorites:', err);
+    return [];
+  }
+});
+
+ipcMain.handle('db-toggle-favorite', async (event, id) => {
+  if (!db) return false;
+  try {
+    return db.toggleFavorite(id);
+  } catch (err) {
+    console.error('Error toggling favorite:', err);
+    return false;
+  }
+});
+
+ipcMain.handle('db-delete-generation', async (event, id) => {
+  if (!db) return;
+  try {
+    db.deleteGeneration(id);
+  } catch (err) {
+    console.error('Error deleting generation:', err);
+  }
+});
+
+ipcMain.handle('db-search-generations', async (event, query) => {
+  if (!db) return [];
+  try {
+    return db.searchGenerations(query);
+  } catch (err) {
+    console.error('Error searching generations:', err);
+    return [];
+  }
+});
+
+// Initialize database on app ready
+app.on('ready', () => {
+  if (db) {
+    try {
+      db.initDatabase();
+    } catch (err) {
+      console.error('Error initializing database:', err);
+    }
+  }
+});
+
+// Close database on app quit
+app.on('before-quit', () => {
+  if (db) {
+    try {
+      db.closeDatabase();
+    } catch (err) {
+      console.error('Error closing database:', err);
+    }
+  }
+});

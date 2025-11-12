@@ -1,9 +1,13 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Header } from './components/Header';
 import { PromptInput } from './components/PromptInput';
 import { ImageDisplay } from './components/ImageDisplay';
 import { Footer } from './components/Footer';
 import { Settings } from './components/Settings';
+import { ToastContainer } from './components/Toast';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { useToast } from './hooks/useToast';
 import { generateImage } from './services/geminiService';
 import { StyleSelector } from './components/StyleSelector';
 import { ImageHistory } from './components/ImageHistory';
@@ -57,7 +61,8 @@ const inspirationStarters: Record<string, string[]> = {
   ],
 };
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
+  const { toasts, removeToast, success, error } = useToast();
   const [prompt, setPrompt] = useState<string>('');
   const [currentImageUrl, setCurrentImageUrl] = useState<string | null>(null);
   const [baseImage, setBaseImage] = useState<BaseImage | null>(null);
@@ -137,7 +142,7 @@ const App: React.FC = () => {
 
   const handleGenerate = useCallback(async () => {
     const effectivePrompt = prompt.trim() || "the creature or object in the image";
-    
+
     if (isLoading || (!prompt.trim() && !baseImage)) return;
 
     setIsLoading(true);
@@ -149,13 +154,16 @@ const App: React.FC = () => {
       setCurrentImageUrl(url);
       setHistory(prev => [url, ...prev].slice(0, 4));
       setBaseImage(null); // Clear the base image after successful generation
+      success('Image generated successfully!');
     } catch (err) {
       console.error(err);
-      setError(err instanceof Error ? err.message : 'An unknown error occurred. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred. Please try again.';
+      setError(errorMessage);
+      error(errorMessage);
     } finally {
       setIsLoading(false);
     }
-  }, [prompt, isLoading, baseImage, selectedStyle]);
+  }, [prompt, isLoading, baseImage, selectedStyle, success, error]);
 
   const handleSelectHistoryImage = useCallback((url: string) => {
     setCurrentImageUrl(url);
@@ -164,10 +172,29 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col items-center justify-between p-4 sm:p-6 lg:p-8 bg-ghibli-cream">
+      <ToastContainer toasts={toasts} onRemove={removeToast} />
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="min-h-screen flex flex-col items-center justify-between p-4 sm:p-6 lg:p-8 bg-ghibli-cream dark:bg-gray-900 transition-colors duration-300"
+      >
         <main className="w-full max-w-2xl mx-auto flex flex-col items-center flex-grow">
-          <Header onOpenSettings={() => setIsSettingsOpen(true)} />
-          <div className="w-full bg-white/50 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-lg border border-ghibli-tan/50 mt-8">
+          <motion.div
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
+            <Header onOpenSettings={() => setIsSettingsOpen(true)} />
+          </motion.div>
+
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4, duration: 0.5 }}
+            className="w-full bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-lg border border-ghibli-tan/50 dark:border-gray-700 mt-8 transition-colors duration-300"
+          >
             <StyleSelector
               selectedStyle={selectedStyle}
               setSelectedStyle={setSelectedStyle}
@@ -189,13 +216,21 @@ const App: React.FC = () => {
               onImageSelect={handleImageSelect}
               onImageRemove={handleImageRemove}
             />
-          </div>
+          </motion.div>
+
           {history.length > 0 && (
-            <ImageHistory history={history} onImageSelect={handleSelectHistoryImage} />
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+              className="w-full"
+            >
+              <ImageHistory history={history} onImageSelect={handleSelectHistoryImage} />
+            </motion.div>
           )}
         </main>
         <Footer />
-      </div>
+      </motion.div>
 
       {/* Settings Modal */}
       <Settings
@@ -205,6 +240,14 @@ const App: React.FC = () => {
         currentApiKey={apiKey}
       />
     </>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 };
 

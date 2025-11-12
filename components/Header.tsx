@@ -1,5 +1,6 @@
 import React from 'react';
 import { LeafIcon } from './icons/LeafIcon';
+import { ThemeToggle } from './ThemeToggle';
 
 interface HeaderProps {
   onOpenSettings?: () => void;
@@ -15,25 +16,28 @@ const SettingsIcon = () => (
 export const Header: React.FC<HeaderProps> = ({ onOpenSettings }) => {
   return (
     <header className="text-center relative">
-      {onOpenSettings && (
-        <button
-          type="button"
-          onClick={onOpenSettings}
-          className="absolute right-0 top-0 p-2 text-ghibli-brown hover:text-ghibli-dark-brown hover:bg-ghibli-tan/30 rounded-lg transition-all duration-200"
-          aria-label="Open settings"
-          title="Settings"
-        >
-          <SettingsIcon />
-        </button>
-      )}
+      <div className="absolute right-0 top-0 flex gap-2">
+        <ThemeToggle />
+        {onOpenSettings && (
+          <button
+            type="button"
+            onClick={onOpenSettings}
+            className="p-2 text-ghibli-brown dark:text-gray-300 hover:text-ghibli-dark-brown dark:hover:text-white hover:bg-ghibli-tan/30 dark:hover:bg-gray-700 rounded-lg transition-all duration-200"
+            aria-label="Open settings"
+            title="Settings"
+          >
+            <SettingsIcon />
+          </button>
+        )}
+      </div>
       <div className="flex items-center justify-center gap-3">
-        <LeafIcon className="w-8 h-8 text-ghibli-dark-green" />
-        <h1 className="text-3xl sm:text-4xl font-bold text-ghibli-dark-brown">
+        <LeafIcon className="w-8 h-8 text-ghibli-dark-green dark:text-green-400" />
+        <h1 className="text-3xl sm:text-4xl font-bold text-ghibli-dark-brown dark:text-gray-100">
           Ghibli-esque Trinkets
         </h1>
-        <LeafIcon className="w-8 h-8 text-ghibli-dark-green transform -scale-x-100" />
+        <LeafIcon className="w-8 h-8 text-ghibli-dark-green dark:text-green-400 transform -scale-x-100" />
       </div>
-      <p className="mt-2 text-md sm:text-lg text-ghibli-brown">
+      <p className="mt-2 text-md sm:text-lg text-ghibli-brown dark:text-gray-400">
         Generate ideas for charming 3D-printable creations.
       </p>
     </header>

@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
+import { motion } from 'framer-motion';
 import { TotoroPlaceholder } from './icons/TotoroPlaceholder';
+import { LoadingSkeleton } from './LoadingSkeleton';
 import { downloadOpenSCADFile } from '../utils/openscadGenerator';
 
 interface BaseImage {
@@ -60,15 +62,7 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({ imageUrl, isLoading,
 
   const renderContent = () => {
     if (isLoading) {
-      return (
-        <div className="text-center text-ghibli-brown">
-          <div className="animate-pulse">
-            <TotoroPlaceholder className="w-24 h-24 mx-auto text-ghibli-tan" />
-          </div>
-          <p className="mt-4 text-lg font-semibold">Our little forest spirits are drawing...</p>
-          <p className="text-sm">This can take a moment.</p>
-        </div>
-      );
+      return <LoadingSkeleton />;
     }
     
     if (error) {

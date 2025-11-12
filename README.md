@@ -49,7 +49,7 @@
 ### Prerequisites
 - **Node.js** 18+ ([Download](https://nodejs.org/))
 - **npm** or **yarn**
-- **Hugging Face API Token** ([Get one free](https://huggingface.co/settings/tokens)) - **100% Free, No Credit Card!**
+- **No API Key Required!** Uses [Pollinations.ai](https://pollinations.ai/) - 100% free image generation
 
 ### Installation
 
@@ -64,22 +64,9 @@
    npm install
    ```
 
-3. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   ```
+3. **No API setup needed!**
 
-   Edit `.env` and add your Hugging Face API token:
-   ```env
-   VITE_HUGGINGFACE_API_KEY=your_hf_token_here
-   ```
-
-   **How to get your free Hugging Face token:**
-   1. Go to https://huggingface.co/settings/tokens
-   2. Click "New token"
-   3. Name: `ghibli-3d-generator`
-   4. Type: **Read**
-   5. Click "Generate" and copy the token (starts with `hf_...`)
+   The app uses [Pollinations.ai](https://pollinations.ai/) which is 100% free and requires no API key! Just run the app and start generating images.
 
 4. **Run the development server**
    ```bash

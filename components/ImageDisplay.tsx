@@ -117,12 +117,12 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({ imageUrl, isLoading,
             <div className="relative w-full h-full group">
                 <img src={`data:${baseImage.mimeType};base64,${baseImage.data}`} alt="Uploaded base" className="w-full h-full object-contain rounded-md" />
 
-                {/* Info badge showing TRUE image-to-image mode */}
-                <div className="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg flex items-center gap-2">
+                {/* Info badge showing reference mode */}
+                <div className="absolute top-4 left-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    Image-to-Image Mode
+                    Reference Mode
                 </div>
 
                 <button
@@ -142,26 +142,10 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({ imageUrl, isLoading,
        <div className="text-center text-ghibli-brown flex flex-col items-center justify-center px-4">
         <TotoroPlaceholder className="w-24 h-24 mx-auto text-ghibli-tan" />
         <p className="mt-4 text-lg font-semibold">Your canvas is ready!</p>
-
-        {/* Updated messaging to reflect TRUE image-to-image capability */}
-        <div className="bg-ghibli-tan/20 rounded-lg p-4 mb-4 mt-3 max-w-md">
-          <p className="text-sm font-semibold mb-2">🎨 Two Ways to Create:</p>
-          <div className="text-xs text-left space-y-2">
-            <div className="flex items-start gap-2">
-              <span className="text-green-600 font-bold">✓</span>
-              <div>
-                <strong>Text-to-Image:</strong> Describe your idea and generate from scratch
-              </div>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-green-600 font-bold">✓</span>
-              <div>
-                <strong>Image-to-Image:</strong> Upload a photo and transform it into your chosen art style!
-              </div>
-            </div>
-          </div>
-        </div>
-
+        <p className="text-sm mb-2">Describe an idea to generate from scratch</p>
+        <p className="text-xs text-ghibli-brown/70 mb-4">
+          💡 Tip: Upload a reference image and describe what's in it to recreate it in your chosen style
+        </p>
         <input
             type="file"
             ref={fileInputRef}
@@ -176,7 +160,7 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({ imageUrl, isLoading,
             className="bg-ghibli-tan text-ghibli-dark-brown font-semibold py-2 px-4 rounded-lg hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ghibli-tan transition-all duration-200 flex items-center justify-center"
         >
            <UploadIcon />
-           Upload Image to Transform
+           Upload Reference Image
         </button>
       </div>
     );

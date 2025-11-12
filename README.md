@@ -23,11 +23,11 @@
 - **Modern Anime**: Vibrant Japanese anime with dynamic angles
 - **Action Figure**: Collectible toy design with articulated joints
 
-### 🖼️ **Hybrid AI Image Generation** 🆕
-- **Text-to-Image**: Describe your creation and generate from scratch (Pollinations.ai)
-- **Image-to-Image**: Upload a photo and transform it into your chosen art style (imgtoimg.ai)
-- **100% FREE**: Both services require no API keys or authentication!
-- **Smart Fallback**: Automatic service switching for maximum reliability
+### 🖼️ **Dual Input Modes**
+- **Text-to-Image**: Describe your creation and generate from scratch
+- **Reference Image Mode**: Upload a photo and describe it - AI recreates it in your chosen style
+- **100% FREE**: Uses Pollinations.ai - no API keys required!
+- **Unlimited Usage**: Generate as many images as you want
 
 ### 🎯 **3D Printing Ready**
 - **PNG Export**: High-quality concept art images
@@ -51,9 +51,7 @@
 ### Prerequisites
 - **Node.js** 18+ ([Download](https://nodejs.org/))
 - **npm** or **yarn**
-- **No API Keys Required!** Uses 100% free services:
-  - [imgtoimg.ai](https://imgtoimg.ai/) - Image-to-image transformation
-  - [Pollinations.ai](https://pollinations.ai/) - Text-to-image generation
+- **No API Key Required!** Uses [Pollinations.ai](https://pollinations.ai/) - 100% free image generation
 
 ### Installation
 
@@ -70,11 +68,7 @@
 
 3. **No API setup needed!**
 
-   The app uses a **hybrid AI system** with two 100% free services:
-   - **imgtoimg.ai**: TRUE image-to-image transformation when you upload photos
-   - **Pollinations.ai**: Text-to-image generation when creating from scratch
-
-   Both services require **no API keys or authentication**! Just run the app and start creating.
+   The app uses [Pollinations.ai](https://pollinations.ai/) which is 100% free and requires no API key! Just run the app and start generating images.
 
 4. **Run the development server**
    ```bash

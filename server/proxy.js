@@ -39,14 +39,14 @@ app.post('/api/generate-image', async (req, res) => {
     console.log(`Generating image with model: ${model}`);
     console.log(`Prompt: ${prompt.substring(0, 100)}...`);
 
-    // Call Hugging Face API
+    // Call Hugging Face Serverless Inference API
+    // Using the free tier endpoint
     const response = await fetch(
       `https://api-inference.huggingface.co/models/${model}`,
       {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${HF_API_KEY}`,
-          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           inputs: prompt,

@@ -6,26 +6,26 @@ if (!HF_API_KEY) {
 }
 
 // Hugging Face model endpoints for each style
-// Using actively maintained and working models
+// Using models that work reliably with the free Inference API
 const styleModels: Record<string, { model: string; prompt: string }> = {
     "Ghibli-esque": {
-        model: "stabilityai/stable-diffusion-xl-base-1.0",
+        model: "runwayml/stable-diffusion-v1-5",
         prompt: "studio ghibli style, miyazaki hayao art style, high quality hand-drawn 2D animation, warm nostalgic wholesome aesthetic, soft watercolor painting, gentle cel shading, warm earth tones and pastels, soft rounded features, prominent expressive eyes, natural rosy cheeks, soft ambient lighting, whimsical, concept art for 3D printable object, white background"
     },
     "Pixar 3D": {
-        model: "stabilityai/stable-diffusion-xl-base-1.0",
+        model: "runwayml/stable-diffusion-v1-5",
         prompt: "pixar disney style 3D render, polished vibrant CGI animation, smooth surfaces, detailed textures, expressive rounded character design, dynamic soft lighting, depth and realism, bright saturated colors, professional 3D animation quality, concept art for 3D printable object, white background"
     },
     "Claymation": {
-        model: "stabilityai/stable-diffusion-xl-base-1.0",
+        model: "runwayml/stable-diffusion-v1-5",
         prompt: "claymation stop-motion style, aardman animations wallace and gromit style, handcrafted tactile clay aesthetic, visible fingerprints, subtle surface imperfections, exaggerated expressive features, practical warm lighting, physical miniature set, solid matte colors, concept art for 3D printable object, white background"
     },
     "Modern Anime": {
-        model: "stabilityai/stable-diffusion-xl-base-1.0",
+        model: "runwayml/stable-diffusion-v1-5",
         prompt: "modern anime style, japanese animation, vibrant colors, clean sharp line work, dynamic angles, expressive large eyes, bold cel-shaded colors, dramatic lighting, high contrast, manga style, concept art for 3D printable object, white background"
     },
     "Action Figure": {
-        model: "stabilityai/stable-diffusion-xl-base-1.0",
+        model: "runwayml/stable-diffusion-v1-5",
         prompt: "collectible action figure toy style, high-quality detailed toy figure, articulated joints, detailed sculpting, display base, hot toys figma style, visible joint lines, slight plastic sheen, detailed paint applications, dynamic heroic pose, display stand, concept art for 3D printable object, white background"
     }
 };

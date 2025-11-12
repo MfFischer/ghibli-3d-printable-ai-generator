@@ -6,26 +6,27 @@ if (!HF_API_KEY) {
 }
 
 // Hugging Face model endpoints for each style
+// Using actively maintained and working models
 const styleModels: Record<string, { model: string; prompt: string }> = {
     "Ghibli-esque": {
-        model: "nitrosocke/Ghibli-Diffusion",
-        prompt: "ghibli style, high quality hand-drawn 2D animation, warm nostalgic wholesome aesthetic, Studio Ghibli inspired, soft distinct black line work, gentle cel shading, warm earth tones and pastels, browns cream muted greens soft pinks, soft rounded features, prominent expressive eyes, natural rosy cheeks, soft ambient lighting, concept art for 3D printable object"
+        model: "stabilityai/stable-diffusion-xl-base-1.0",
+        prompt: "studio ghibli style, miyazaki hayao art style, high quality hand-drawn 2D animation, warm nostalgic wholesome aesthetic, soft watercolor painting, gentle cel shading, warm earth tones and pastels, soft rounded features, prominent expressive eyes, natural rosy cheeks, soft ambient lighting, whimsical, concept art for 3D printable object, white background"
     },
     "Pixar 3D": {
-        model: "stabilityai/stable-diffusion-2-1",
-        prompt: "pixar style 3D render, polished vibrant, smooth surfaces, detailed textures, expressive rounded character design, dynamic soft lighting, depth and realism, bright saturated colors, concept art for 3D printable object, white background"
+        model: "stabilityai/stable-diffusion-xl-base-1.0",
+        prompt: "pixar disney style 3D render, polished vibrant CGI animation, smooth surfaces, detailed textures, expressive rounded character design, dynamic soft lighting, depth and realism, bright saturated colors, professional 3D animation quality, concept art for 3D printable object, white background"
     },
     "Claymation": {
-        model: "stabilityai/stable-diffusion-2-1",
-        prompt: "claymation stop-motion style, Aardman Animations inspired, handcrafted tactile aesthetic, visible fingerprints, subtle surface imperfections, exaggerated expressive features, practical warm lighting, physical set, solid matte colors, concept art for 3D printable object, white background"
+        model: "stabilityai/stable-diffusion-xl-base-1.0",
+        prompt: "claymation stop-motion style, aardman animations wallace and gromit style, handcrafted tactile clay aesthetic, visible fingerprints, subtle surface imperfections, exaggerated expressive features, practical warm lighting, physical miniature set, solid matte colors, concept art for 3D printable object, white background"
     },
     "Modern Anime": {
-        model: "Linaqruf/anything-v3.0",
-        prompt: "modern anime style, vibrant, clean sharp line work, dynamic angles, expressive large eyes, bold cel-shaded colors, dramatic lighting, high contrast, stylized motion, simple abstract background, concept art for 3D printable object"
+        model: "stabilityai/stable-diffusion-xl-base-1.0",
+        prompt: "modern anime style, japanese animation, vibrant colors, clean sharp line work, dynamic angles, expressive large eyes, bold cel-shaded colors, dramatic lighting, high contrast, manga style, concept art for 3D printable object, white background"
     },
     "Action Figure": {
-        model: "stabilityai/stable-diffusion-2-1",
-        prompt: "collectible action figure style, high-quality toy, articulated joints, detailed sculpting, display base, Hot Toys Figma inspired, visible joint lines, slight plastic sheen, detailed paint applications, dynamic heroic pose, display stand, concept art for 3D printable object, white background"
+        model: "stabilityai/stable-diffusion-xl-base-1.0",
+        prompt: "collectible action figure toy style, high-quality detailed toy figure, articulated joints, detailed sculpting, display base, hot toys figma style, visible joint lines, slight plastic sheen, detailed paint applications, dynamic heroic pose, display stand, concept art for 3D printable object, white background"
     }
 };
 

@@ -66,7 +66,7 @@ const inspirationStarters: Record<string, string[]> = {
 };
 
 const AppContent: React.FC = () => {
-  const { toasts, removeToast, success, error } = useToast();
+  const { toasts, removeToast, success, error: showError } = useToast();
   const [prompt, setPrompt] = useState<string>('');
   const [currentImageUrl, setCurrentImageUrl] = useState<string | null>(null);
   const [baseImage, setBaseImage] = useState<BaseImage | null>(null);
@@ -163,11 +163,11 @@ const AppContent: React.FC = () => {
       console.error(err);
       const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred. Please try again.';
       setError(errorMessage);
-      error(errorMessage);
+      showError(errorMessage);
     } finally {
       setIsLoading(false);
     }
-  }, [prompt, isLoading, baseImage, selectedStyle, success, error]);
+  }, [prompt, isLoading, baseImage, selectedStyle, success, showError]);
 
   const handleSelectHistoryImage = useCallback((url: string) => {
     setCurrentImageUrl(url);

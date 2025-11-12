@@ -130,10 +130,13 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({ imageUrl, isLoading,
     
     // Initial State
     return (
-       <div className="text-center text-ghibli-brown flex flex-col items-center justify-center">
+       <div className="text-center text-ghibli-brown flex flex-col items-center justify-center px-4">
         <TotoroPlaceholder className="w-24 h-24 mx-auto text-ghibli-tan" />
         <p className="mt-4 text-lg font-semibold">Your canvas is ready!</p>
-        <p className="text-sm mb-4">Describe an idea or upload an image to transform.</p>
+        <p className="text-sm mb-2">Describe an idea to generate from scratch</p>
+        <p className="text-xs text-ghibli-brown/70 mb-4">
+          💡 Tip: Upload a reference image and describe what's in it to recreate it in your chosen style
+        </p>
         <input
             type="file"
             ref={fileInputRef}
@@ -148,7 +151,7 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({ imageUrl, isLoading,
             className="bg-ghibli-tan text-ghibli-dark-brown font-semibold py-2 px-4 rounded-lg hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ghibli-tan transition-all duration-200 flex items-center justify-center"
         >
            <UploadIcon />
-           Upload Image
+           Upload Reference Image
         </button>
       </div>
     );

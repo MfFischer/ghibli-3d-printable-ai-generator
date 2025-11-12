@@ -20,14 +20,20 @@ export const PromptInput: React.FC<PromptInputProps> = ({ prompt, setPrompt, onG
   return (
     <div className="w-full">
       <label htmlFor="prompt-input" className="block text-lg font-semibold text-ghibli-dark-brown mb-2">
-        {hasBaseImage ? "Describe your desired changes (optional)" : "Describe your creation"}
+        {hasBaseImage ? "Describe what's in your reference image" : "Describe your creation"}
       </label>
+      {hasBaseImage && (
+        <p className="text-sm text-ghibli-brown/80 mb-2 bg-ghibli-tan/20 p-2 rounded">
+          💡 <strong>Tip:</strong> Describe what you see in your uploaded image (e.g., "a cat sitting on a chair").
+          The AI will recreate it in your chosen style!
+        </p>
+      )}
       <textarea
         id="prompt-input"
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder={hasBaseImage ? "e.g., make it hold a flower" : "e.g., a cheerful radish spirit holding a tiny leaf umbrella"}
+        placeholder={hasBaseImage ? "e.g., a cat sitting on a windowsill" : "e.g., a cheerful radish spirit holding a tiny leaf umbrella"}
         className="w-full h-24 p-3 text-base bg-ghibli-cream border-2 border-ghibli-tan rounded-lg focus:ring-2 focus:ring-ghibli-green focus:border-ghibli-green transition duration-200 resize-none placeholder-ghibli-tan"
         disabled={isLoading}
       />

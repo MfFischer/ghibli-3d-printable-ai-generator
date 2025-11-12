@@ -23,14 +23,20 @@ interface BaseImage {
 
 export const generateImage = async (userPrompt: string, baseImage: BaseImage | null, style: string): Promise<string> => {
   try {
-    const fullPrompt = getFullPrompt(userPrompt, style);
+    // Note: Pollinations.ai is text-to-image only
+    // When user uploads an image, they should describe what's in it
+    // and we'll generate a new image in the selected style based on that description
 
+    let effectivePrompt = userPrompt;
     if (baseImage) {
-      console.warn("Image-to-image transformation not yet supported. Using text-to-image instead.");
+      // Enhance prompt to indicate we're recreating the uploaded image's subject
+      effectivePrompt = `${userPrompt}, detailed recreation, maintaining the subject and key features`;
+      console.log('Reference image mode: Creating new image based on your description of the uploaded image');
     }
 
+    const fullPrompt = getFullPrompt(effectivePrompt, style);
+
     // Pollinations.ai - 100% FREE, no API key needed!
-    // Simply encode the prompt in the URL and fetch the image
     const encodedPrompt = encodeURIComponent(fullPrompt);
     const imageUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1024&height=1024&nologo=true&enhance=true`;
 

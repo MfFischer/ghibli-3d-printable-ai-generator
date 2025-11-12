@@ -49,7 +49,7 @@
 ### Prerequisites
 - **Node.js** 18+ ([Download](https://nodejs.org/))
 - **npm** or **yarn**
-- **Gemini API Key** ([Get one free](https://ai.google.dev/gemini-api/docs/api-key))
+- **Hugging Face API Token** ([Get one free](https://huggingface.co/settings/tokens)) - **100% Free, No Credit Card!**
 
 ### Installation
 
@@ -66,13 +66,20 @@
 
 3. **Set up environment variables**
    ```bash
-   cp .env.example .env.local
+   cp .env.example .env
    ```
 
-   Edit `.env.local` and add your Gemini API key:
+   Edit `.env` and add your Hugging Face API token:
    ```env
-   GEMINI_API_KEY=your_api_key_here
+   VITE_HUGGINGFACE_API_KEY=your_hf_token_here
    ```
+
+   **How to get your free Hugging Face token:**
+   1. Go to https://huggingface.co/settings/tokens
+   2. Click "New token"
+   3. Name: `ghibli-3d-generator`
+   4. Type: **Read**
+   5. Click "Generate" and copy the token (starts with `hf_...`)
 
 4. **Run the development server**
    ```bash

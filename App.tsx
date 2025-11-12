@@ -1,16 +1,20 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { Header } from './components/Header';
 import { PromptInput } from './components/PromptInput';
 import { ImageDisplay } from './components/ImageDisplay';
 import { Footer } from './components/Footer';
-import { Settings } from './components/Settings';
 import { ToastContainer } from './components/Toast';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { useToast } from './hooks/useToast';
 import { generateImage } from './services/geminiService';
 import { StyleSelector } from './components/StyleSelector';
 import { ImageHistory } from './components/ImageHistory';
+
+// Lazy load heavy components
+const Settings = lazy(() => import('./components/Settings').then(m => ({ default: m.Settings })));
+const BatchGeneration = lazy(() => import('./components/BatchGeneration').then(m => ({ default: m.BatchGeneration })));
+const ImageComparison = lazy(() => import('./components/ImageComparison').then(m => ({ default: m.ImageComparison })));
 
 interface BaseImage {
   data: string;
@@ -232,13 +236,19 @@ const AppContent: React.FC = () => {
         <Footer />
       </motion.div>
 
-      {/* Settings Modal */}
-      <Settings
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        onSave={handleSaveApiKey}
-        currentApiKey={apiKey}
-      />
+      {/* Settings Modal - Lazy Loaded */}
+      {isSettingsOpen && (
+        <Suspense fallback={<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg">Loading...</div>
+        </div>}>
+          <Settings
+            isOpen={isSettingsOpen}
+            onClose={() => setIsSettingsOpen(false)}
+            onSave={handleSaveApiKey}
+            currentApiKey={apiKey}
+          />
+        </Suspense>
+      )}
     </>
   );
 };

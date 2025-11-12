@@ -18,6 +18,33 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
-      }
+      },
+      build: {
+        // Enable code splitting
+        rollupOptions: {
+          output: {
+            manualChunks: {
+              // Vendor chunks for better caching
+              'react-vendor': ['react', 'react-dom'],
+              'framer-motion': ['framer-motion'],
+              'gemini': ['@google/genai'],
+            },
+          },
+        },
+        // Optimize chunk size
+        chunkSizeWarningLimit: 1000,
+        // Enable minification
+        minify: 'terser',
+        terserOptions: {
+          compress: {
+            drop_console: mode === 'production',
+            drop_debugger: mode === 'production',
+          },
+        },
+      },
+      // Optimize dependencies
+      optimizeDeps: {
+        include: ['react', 'react-dom', 'framer-motion'],
+      },
     };
 });

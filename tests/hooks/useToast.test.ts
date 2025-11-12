@@ -69,20 +69,18 @@ describe('useToast Hook', () => {
 
   it('removes toast by id', () => {
     const { result } = renderHook(() => useToast());
-    
-    let toastId: string;
-    
+
     act(() => {
       result.current.addToast('Test', 'info');
-      toastId = result.current.toasts[0].id;
     });
-    
+
     expect(result.current.toasts).toHaveLength(1);
-    
+    const toastId = result.current.toasts[0].id;
+
     act(() => {
       result.current.removeToast(toastId);
     });
-    
+
     expect(result.current.toasts).toHaveLength(0);
   });
 
@@ -115,21 +113,19 @@ describe('useToast Hook', () => {
 
   it('removes only the specified toast', () => {
     const { result } = renderHook(() => useToast());
-    
-    let firstId: string;
-    let secondId: string;
-    
+
     act(() => {
       result.current.addToast('First', 'info');
       result.current.addToast('Second', 'info');
-      firstId = result.current.toasts[0].id;
-      secondId = result.current.toasts[1].id;
     });
-    
+
+    const firstId = result.current.toasts[0].id;
+    const secondId = result.current.toasts[1].id;
+
     act(() => {
       result.current.removeToast(firstId);
     });
-    
+
     expect(result.current.toasts).toHaveLength(1);
     expect(result.current.toasts[0].id).toBe(secondId);
   });

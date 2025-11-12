@@ -2,9 +2,9 @@ import { generateOpenSCADCode } from '../../utils/openscadGenerator';
 
 describe('OpenSCAD Generator', () => {
   it('generates valid OpenSCAD code with default options', () => {
-    const code = generateOpenSCADCode('test-model');
-    
-    expect(code).toContain('// 3D Printable Model: test-model');
+    const code = generateOpenSCADCode({ modelName: 'test-model' });
+
+    expect(code).toContain('// Generated from: test-model');
     expect(code).toContain('base_width = 50;');
     expect(code).toContain('base_depth = 50;');
     expect(code).toContain('base_height = 2;');
@@ -12,85 +12,88 @@ describe('OpenSCAD Generator', () => {
   });
 
   it('generates code with custom dimensions', () => {
-    const code = generateOpenSCADCode('custom-model', {
+    const code = generateOpenSCADCode({
+      modelName: 'custom-model',
       baseWidth: 100,
       baseDepth: 80,
       baseHeight: 5,
     });
-    
+
     expect(code).toContain('base_width = 100;');
     expect(code).toContain('base_depth = 80;');
     expect(code).toContain('base_height = 5;');
   });
 
   it('includes stand when includeStand is true', () => {
-    const code = generateOpenSCADCode('model-with-stand', {
+    const code = generateOpenSCADCode({
+      modelName: 'model-with-stand',
       includeStand: true,
     });
-    
+
     expect(code).toContain('include_stand = true;');
     expect(code).toContain('stand_height = 5;');
   });
 
   it('excludes stand when includeStand is false', () => {
-    const code = generateOpenSCADCode('model-without-stand', {
+    const code = generateOpenSCADCode({
+      modelName: 'model-without-stand',
       includeStand: false,
     });
-    
+
     expect(code).toContain('include_stand = false;');
   });
 
   it('includes base module', () => {
-    const code = generateOpenSCADCode('test');
-    
-    expect(code).toContain('module base()');
-    expect(code).toContain('cube([base_width, base_depth, base_height], center=true);');
+    const code = generateOpenSCADCode({ modelName: 'test' });
+
+    expect(code).toContain('module display_base()');
+    expect(code).toContain('cube([base_width - 4, base_depth - 4, base_height/2], center=true);');
   });
 
   it('includes stand module', () => {
-    const code = generateOpenSCADCode('test');
-    
-    expect(code).toContain('module stand()');
+    const code = generateOpenSCADCode({ modelName: 'test' });
+
+    expect(code).toContain('module display_stand()');
     expect(code).toContain('if (include_stand)');
   });
 
   it('includes model placeholder', () => {
-    const code = generateOpenSCADCode('test');
-    
-    expect(code).toContain('module model()');
-    expect(code).toContain('// Add your 3D model geometry here');
+    const code = generateOpenSCADCode({ modelName: 'test' });
+
+    expect(code).toContain('module main_model()');
+    expect(code).toContain('// PLACEHOLDER: Replace this with your actual model');
   });
 
   it('includes assembly instructions', () => {
-    const code = generateOpenSCADCode('test');
-    
-    expect(code).toContain('// Main assembly');
-    expect(code).toContain('base();');
-    expect(code).toContain('stand();');
-    expect(code).toContain('model();');
+    const code = generateOpenSCADCode({ modelName: 'test' });
+
+    expect(code).toContain('// ===== ASSEMBLY =====');
+    expect(code).toContain('display_base();');
+    expect(code).toContain('display_stand();');
+    expect(code).toContain('main_model();');
   });
 
   it('includes helpful comments', () => {
-    const code = generateOpenSCADCode('test');
-    
-    expect(code).toContain('// Parameters');
-    expect(code).toContain('// Modules');
-    expect(code).toContain('// Replace this with your actual model');
+    const code = generateOpenSCADCode({ modelName: 'test' });
+
+    expect(code).toContain('// ===== PARAMETERS (Customize these) =====');
+    expect(code).toContain('// ===== MODEL CODE =====');
+    expect(code).toContain('// - Use the concept art image as reference');
   });
 
   it('generates syntactically valid OpenSCAD code', () => {
-    const code = generateOpenSCADCode('test');
-    
+    const code = generateOpenSCADCode({ modelName: 'test' });
+
     // Check for balanced braces
     const openBraces = (code.match(/{/g) || []).length;
     const closeBraces = (code.match(/}/g) || []).length;
     expect(openBraces).toBe(closeBraces);
-    
+
     // Check for balanced parentheses
     const openParens = (code.match(/\(/g) || []).length;
     const closeParens = (code.match(/\)/g) || []).length;
     expect(openParens).toBe(closeParens);
-    
+
     // Check for balanced brackets
     const openBrackets = (code.match(/\[/g) || []).length;
     const closeBrackets = (code.match(/\]/g) || []).length;
@@ -99,15 +102,15 @@ describe('OpenSCAD Generator', () => {
 
   it('uses model name in comments', () => {
     const modelName = 'my-awesome-model';
-    const code = generateOpenSCADCode(modelName);
-    
-    expect(code).toContain(`// 3D Printable Model: ${modelName}`);
+    const code = generateOpenSCADCode({ modelName });
+
+    expect(code).toContain(`// Generated from: ${modelName}`);
   });
 
   it('handles special characters in model name', () => {
     const modelName = 'model-with-special_chars!@#';
-    const code = generateOpenSCADCode(modelName);
-    
+    const code = generateOpenSCADCode({ modelName });
+
     expect(code).toContain(modelName);
     expect(code).toBeTruthy();
   });

@@ -11,6 +11,8 @@ import { generateImage, GenerationMode } from './services/geminiService';
 import { StyleSelector } from './components/StyleSelector';
 import { ImageHistory } from './components/ImageHistory';
 import { ModeSelector } from './components/ModeSelector';
+import { LandingPage } from './components/LandingPage';
+import { CookieConsent } from './components/CookieConsent';
 
 // Lazy load heavy components
 const Settings = lazy(() => import('./components/Settings').then(m => ({ default: m.Settings })));
@@ -79,6 +81,7 @@ const AppContent: React.FC = () => {
   const [apiKey, setApiKey] = useState<string>('');
   const [generationMode, setGenerationMode] = useState<GenerationMode>('free');
   const [falApiKey, setFalApiKey] = useState<string>('');
+  const [showLandingPage, setShowLandingPage] = useState<boolean>(true);
 
   // Load API keys and mode on mount
   useEffect(() => {
@@ -209,8 +212,12 @@ const AppContent: React.FC = () => {
   return (
     <>
       <ToastContainer toasts={toasts} onRemove={removeToast} />
+      <CookieConsent />
 
-      <motion.div
+      {showLandingPage ? (
+        <LandingPage onGetStarted={() => setShowLandingPage(false)} />
+      ) : (
+        <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -287,6 +294,7 @@ const AppContent: React.FC = () => {
             currentApiKey={apiKey}
           />
         </Suspense>
+      )}
       )}
     </>
   );

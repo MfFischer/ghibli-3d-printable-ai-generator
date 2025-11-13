@@ -295,7 +295,6 @@ const AppContent: React.FC = () => {
           />
         </Suspense>
       )}
-      )}
     </>
   );
 };

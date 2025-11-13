@@ -16,7 +16,9 @@ export const ART_STYLES: ArtStyle[] = [
   'Action Figure',
 ];
 
-export const GEMINI_MODEL = 'gemini-2.5-flash-image';
+// Removed: No longer using Google Gemini
+// Free mode: Pollinations.ai (no API key)
+// Premium mode: fal.ai FLUX.1 (optional API key)
 
 export const MAX_HISTORY_ITEMS = 4;
 

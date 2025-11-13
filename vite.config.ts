@@ -11,8 +11,8 @@ export default defineConfig(({ mode }) => {
       },
       plugins: [react()],
       define: {
-        'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
+        // No API keys needed for free mode (Pollinations.ai)
+        // Premium mode uses VITE_FAL_API_KEY from .env
       },
       resolve: {
         alias: {

@@ -120,7 +120,7 @@ ghibli-trinkets/
 │   ├── ImageHistory.tsx
 │   └── icons/          # SVG icon components
 ├── services/           # API services
-│   └── geminiService.ts
+│   └── imageService.ts  # Hybrid AI generation (Pollinations.ai + fal.ai)
 ├── utils/              # Utility functions
 │   └── openscadGenerator.ts
 ├── types/              # TypeScript type definitions
@@ -194,16 +194,22 @@ Choose from 5 different art styles using the dropdown menu.
 
 ---
 
-## 🔑 API Key Management
+## 🔑 API Key Management (Optional - Premium Mode Only)
 
-### Web Version
-Set your API key in `.env.local`:
+### Free Mode (Default)
+No API key needed! The app works 100% free with Pollinations.ai.
+
+### Premium Mode (Optional)
+For TRUE image-to-image transformation, get a free fal.ai API key:
+
+1. Sign up at [fal.ai](https://fal.ai/) (free credits included!)
+2. Get your API key from the dashboard
+3. Add to `.env`:
 ```env
-GEMINI_API_KEY=your_key_here
+VITE_FAL_API_KEY=your_fal_api_key_here
 ```
 
-### Desktop App
-The desktop app will include a settings panel for secure API key storage using encrypted local storage.
+Or enter it directly in the app's mode selector.
 
 ---
 
@@ -227,7 +233,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- Powered by [Google Gemini AI](https://ai.google.dev/)
+- Free Mode powered by [Pollinations.ai](https://pollinations.ai/)
+- Premium Mode powered by [fal.ai](https://fal.ai/) FLUX.1 model
 - Inspired by Studio Ghibli's timeless art style
 - Built with [React](https://reactjs.org/), [Vite](https://vitejs.dev/), and [Electron](https://www.electronjs.org/)
 

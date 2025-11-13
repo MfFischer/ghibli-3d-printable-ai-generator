@@ -7,9 +7,10 @@ import { Footer } from './components/Footer';
 import { ToastContainer } from './components/Toast';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { useToast } from './hooks/useToast';
-import { generateImage } from './services/geminiService';
+import { generateImage, GenerationMode } from './services/geminiService';
 import { StyleSelector } from './components/StyleSelector';
 import { ImageHistory } from './components/ImageHistory';
+import { ModeSelector } from './components/ModeSelector';
 
 // Lazy load heavy components
 const Settings = lazy(() => import('./components/Settings').then(m => ({ default: m.Settings })));
@@ -76,10 +77,12 @@ const AppContent: React.FC = () => {
   const [history, setHistory] = useState<string[]>([]);
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
   const [apiKey, setApiKey] = useState<string>('');
+  const [generationMode, setGenerationMode] = useState<GenerationMode>('free');
+  const [falApiKey, setFalApiKey] = useState<string>('');
 
-  // Load API key on mount (from Electron or localStorage)
+  // Load API keys and mode on mount
   useEffect(() => {
-    const loadApiKey = async () => {
+    const loadSettings = async () => {
       if (window.electronAPI) {
         // Desktop app: load from Electron secure storage
         const key = await window.electronAPI.getApiKey();
@@ -89,8 +92,16 @@ const AppContent: React.FC = () => {
         const key = localStorage.getItem('gemini_api_key') || '';
         setApiKey(key);
       }
+
+      // Load fal.ai API key
+      const falKey = import.meta.env.VITE_FAL_API_KEY || localStorage.getItem('fal_api_key') || '';
+      setFalApiKey(falKey);
+
+      // Load generation mode preference
+      const savedMode = localStorage.getItem('generation_mode') as GenerationMode || 'free';
+      setGenerationMode(savedMode);
     };
-    loadApiKey();
+    loadSettings();
   }, []);
 
   // Listen for settings open event from Electron menu
@@ -149,16 +160,22 @@ const AppContent: React.FC = () => {
 
     if (isLoading || (!prompt.trim() && !baseImage)) return;
 
+    // Check if premium mode is selected but no API key
+    if (generationMode === 'premium' && !falApiKey) {
+      showError('Premium mode requires a fal.ai API key. Please add your API key or switch to Free mode.');
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
     setCurrentImageUrl(null);
 
     try {
-      const url = await generateImage(effectivePrompt, baseImage, selectedStyle);
+      const url = await generateImage(effectivePrompt, baseImage, selectedStyle, generationMode, falApiKey);
       setCurrentImageUrl(url);
       setHistory(prev => [url, ...prev].slice(0, 4));
       setBaseImage(null); // Clear the base image after successful generation
-      success('Image generated successfully!');
+      success(`Image generated successfully! (${generationMode === 'premium' ? 'Premium' : 'Free'} mode)`);
     } catch (err) {
       console.error(err);
       const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred. Please try again.';
@@ -167,12 +184,27 @@ const AppContent: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [prompt, isLoading, baseImage, selectedStyle, success, showError]);
+  }, [prompt, isLoading, baseImage, selectedStyle, generationMode, falApiKey, success, showError]);
 
   const handleSelectHistoryImage = useCallback((url: string) => {
     setCurrentImageUrl(url);
     setError(null);
   }, []);
+
+  const handleModeChange = useCallback((mode: GenerationMode) => {
+    setGenerationMode(mode);
+    localStorage.setItem('generation_mode', mode);
+
+    if (mode === 'premium' && !falApiKey) {
+      showError('Premium mode requires a fal.ai API key. Get yours free at https://fal.ai/');
+    }
+  }, [falApiKey, showError]);
+
+  const handleFalApiKeyChange = useCallback((key: string) => {
+    setFalApiKey(key);
+    localStorage.setItem('fal_api_key', key);
+    success('fal.ai API key saved!');
+  }, [success]);
 
   return (
     <>
@@ -199,6 +231,13 @@ const AppContent: React.FC = () => {
             transition={{ delay: 0.4, duration: 0.5 }}
             className="w-full bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm p-6 sm:p-8 rounded-2xl shadow-lg border border-ghibli-tan/50 dark:border-gray-700 mt-8 transition-colors duration-300"
           >
+            <ModeSelector
+              mode={generationMode}
+              onModeChange={handleModeChange}
+              falApiKey={falApiKey}
+              onFalApiKeyChange={handleFalApiKeyChange}
+              hasBaseImage={!!baseImage}
+            />
             <StyleSelector
               selectedStyle={selectedStyle}
               setSelectedStyle={setSelectedStyle}

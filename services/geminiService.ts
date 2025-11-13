@@ -1,13 +1,17 @@
-// POLLINATIONS.AI - 100% FREE TEXT-TO-IMAGE GENERATION
+// HYBRID AI IMAGE GENERATION SYSTEM
 //
-// 🎨 FREE IMAGE GENERATION:
-// - Text-to-image: Create images from text descriptions
-// - Image reference mode: User describes uploaded image, AI generates new version
-// - No API keys required!
-// - Unlimited usage
+// 🎨 TWO MODES:
+// 1. FREE MODE (Pollinations.ai):
+//    - Text-to-image generation
+//    - Reference mode: User describes uploaded image
+//    - No API key required
+//    - Unlimited usage
 //
-// Note: This is text-to-image only. For true image-to-image transformation,
-// paid services like Replicate or fal.ai would be needed.
+// 2. PREMIUM MODE (fal.ai):
+//    - TRUE image-to-image transformation
+//    - Upload image → AI transforms it directly
+//    - Requires API key (free credits available)
+//    - Higher quality results
 
 // Style-specific prompt enhancements
 const stylePrompts: Record<string, string> = {
@@ -23,30 +27,45 @@ const getFullPrompt = (userPrompt: string, style: string) => {
     return `${userPrompt}, ${stylePrompt}`;
 }
 
-interface BaseImage {
+export interface BaseImage {
   data: string;
   mimeType: string;
 }
 
-/**
- * Generate image using Pollinations.ai
- * - If baseImage provided: User describes the image, AI generates a new version based on description
- * - If no baseImage: Standard text-to-image generation
- */
-export const generateImage = async (userPrompt: string, baseImage: BaseImage | null, style: string): Promise<string> => {
-  try {
-    let effectivePrompt = userPrompt;
+export type GenerationMode = 'free' | 'premium';
 
-    if (baseImage) {
-      // Enhance prompt to indicate we're recreating based on user's description
-      effectivePrompt = `${userPrompt}, detailed recreation in the described style, maintaining key features and composition`;
-      console.log('🎨 Reference image mode: Generating new image based on your description');
-    } else {
-      console.log('🎨 Text-to-image mode: Generating from scratch');
+/**
+ * Generate image using hybrid approach
+ * - Free mode: Pollinations.ai (text-to-image)
+ * - Premium mode: fal.ai (true image-to-image)
+ */
+export const generateImage = async (
+  userPrompt: string,
+  baseImage: BaseImage | null,
+  style: string,
+  mode: GenerationMode = 'free',
+  falApiKey?: string
+): Promise<string> => {
+  try {
+    const fullPrompt = getFullPrompt(userPrompt, style);
+
+    // PREMIUM MODE: Use fal.ai for TRUE image-to-image transformation
+    if (mode === 'premium' && baseImage && falApiKey) {
+      console.log('✨ PREMIUM MODE: Using fal.ai for TRUE image-to-image transformation');
+      return await generateWithFalAI(baseImage, fullPrompt, falApiKey);
     }
 
-    const fullPrompt = getFullPrompt(effectivePrompt, style);
-    return await generateWithPollinations(fullPrompt);
+    // FREE MODE: Use Pollinations.ai
+    if (baseImage) {
+      // Enhance prompt for reference mode
+      const enhancedPrompt = `${userPrompt}, detailed recreation in the described style, maintaining key features and composition`;
+      const fullEnhancedPrompt = getFullPrompt(enhancedPrompt, style);
+      console.log('🎨 FREE MODE (Reference): Generating new image based on your description');
+      return await generateWithPollinations(fullEnhancedPrompt);
+    } else {
+      console.log('🎨 FREE MODE: Text-to-image generation');
+      return await generateWithPollinations(fullPrompt);
+    }
 
   } catch (error) {
     console.error("Error generating image:", error);
@@ -58,7 +77,91 @@ export const generateImage = async (userPrompt: string, baseImage: BaseImage | n
 };
 
 /**
- * Pollinations.ai - Text-to-image generation
+ * fal.ai - TRUE image-to-image transformation (PREMIUM)
+ * Transforms uploaded images directly using FLUX.1 model
+ * Requires API key (free credits available at https://fal.ai/)
+ */
+async function generateWithFalAI(baseImage: BaseImage, prompt: string, apiKey: string): Promise<string> {
+  try {
+    // Convert base64 to blob URL for fal.ai
+    const base64Data = baseImage.data.includes('base64,')
+      ? baseImage.data.split('base64,')[1]
+      : baseImage.data;
+
+    const byteCharacters = atob(base64Data);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: baseImage.mimeType });
+
+    // Create a temporary URL for the image
+    const imageUrl = URL.createObjectURL(blob);
+
+    console.log('Sending image to fal.ai FLUX.1 image-to-image...');
+    console.log('Prompt:', prompt.substring(0, 100) + '...');
+
+    const response = await fetch('https://fal.run/fal-ai/flux/dev/image-to-image', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Key ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        image_url: imageUrl,
+        prompt: prompt,
+        strength: 0.85, // How much to transform (0.0 = no change, 1.0 = complete transformation)
+        guidance_scale: 3.5, // How closely to follow the prompt
+        num_inference_steps: 40, // Quality vs speed
+        num_images: 1,
+        enable_safety_checker: true,
+        output_format: 'jpeg'
+      })
+    });
+
+    // Clean up the temporary URL
+    URL.revokeObjectURL(imageUrl);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error('fal.ai error:', errorText);
+
+      // Fallback to Pollinations.ai if fal.ai fails
+      console.log('⚠️ fal.ai failed, falling back to FREE mode (Pollinations.ai)...');
+      return await generateWithPollinations(prompt);
+    }
+
+    const result = await response.json();
+
+    // fal.ai returns images array with URLs
+    if (result.images && result.images.length > 0) {
+      const imageUrl = result.images[0].url;
+
+      // Download the image and convert to base64
+      const imageResponse = await fetch(imageUrl);
+      const blob = await imageResponse.blob();
+
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    } else {
+      throw new Error('Unexpected response format from fal.ai');
+    }
+
+  } catch (error) {
+    console.error('fal.ai error:', error);
+    // Fallback to Pollinations.ai
+    console.log('⚠️ Falling back to FREE mode (Pollinations.ai)...');
+    return await generateWithPollinations(prompt);
+  }
+}
+
+/**
+ * Pollinations.ai - Text-to-image generation (FREE)
  * Creates new images from text prompts
  * 100% FREE - No API key required!
  */

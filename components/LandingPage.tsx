@@ -1,12 +1,22 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { PrivacyPolicy } from './PrivacyPolicy';
+import { TermsOfService } from './TermsOfService';
 
 interface LandingPageProps {
   onGetStarted: () => void;
 }
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
+  const [showTermsOfService, setShowTermsOfService] = useState(false);
+
   return (
+    <>
+      <AnimatePresence>
+        {showPrivacyPolicy && <PrivacyPolicy onClose={() => setShowPrivacyPolicy(false)} />}
+        {showTermsOfService && <TermsOfService onClose={() => setShowTermsOfService(false)} />}
+      </AnimatePresence>
     <div className="min-h-screen bg-gradient-to-br from-ghibli-cream via-ghibli-tan/30 to-ghibli-sage/20 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
@@ -264,9 +274,21 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             <div>
               <h4 className="font-bold text-lg mb-4">Legal</h4>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-white">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-white">Terms of Service</a></li>
-                <li><a href="#" className="hover:text-white">Cookie Policy</a></li>
+                <li>
+                  <button type="button" onClick={() => setShowPrivacyPolicy(true)} className="hover:text-white">
+                    Privacy Policy
+                  </button>
+                </li>
+                <li>
+                  <button type="button" onClick={() => setShowTermsOfService(true)} className="hover:text-white">
+                    Terms of Service
+                  </button>
+                </li>
+                <li>
+                  <button type="button" onClick={() => setShowPrivacyPolicy(true)} className="hover:text-white">
+                    Cookie Policy
+                  </button>
+                </li>
               </ul>
             </div>
             <div>
@@ -287,6 +309,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
         </div>
       </footer>
     </div>
+    </>
   );
 };
 

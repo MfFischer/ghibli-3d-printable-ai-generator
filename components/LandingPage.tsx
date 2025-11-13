@@ -17,7 +17,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
         {showPrivacyPolicy && <PrivacyPolicy onClose={() => setShowPrivacyPolicy(false)} />}
         {showTermsOfService && <TermsOfService onClose={() => setShowTermsOfService(false)} />}
       </AnimatePresence>
-    <div className="min-h-screen bg-gradient-to-br from-ghibli-cream via-ghibli-tan/30 to-ghibli-sage/20 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-emerald-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center">
@@ -26,13 +26,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl md:text-7xl font-bold text-ghibli-dark-brown dark:text-white mb-6">
+            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6">
               Transform Your Ideas Into
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-ghibli-sage to-ghibli-brown mt-2">
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-amber-600 mt-2">
                 Magical 3D Printables
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-800 dark:text-gray-200 mb-8 max-w-3xl mx-auto font-medium">
               Generate stunning AI-powered concept art in Studio Ghibli, Pixar, and more styles.
               Perfect for 3D printing enthusiasts and creators.
             </p>
@@ -41,7 +41,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={onGetStarted}
-                className="px-8 py-4 bg-gradient-to-r from-ghibli-sage to-ghibli-brown text-white text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition-all"
+                className="px-8 py-4 bg-gradient-to-r from-emerald-600 to-amber-600 text-white text-lg font-bold rounded-full shadow-xl hover:shadow-2xl transition-all"
               >
                 🎨 Try Free Now
               </motion.button>
@@ -49,7 +49,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 href="#pricing"
-                className="px-8 py-4 bg-white dark:bg-gray-800 text-ghibli-dark-brown dark:text-white text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition-all border-2 border-ghibli-sage"
+                className="px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-lg font-bold rounded-full shadow-xl hover:shadow-2xl transition-all border-2 border-emerald-600 dark:border-emerald-500"
               >
                 View Pricing
               </motion.a>
@@ -63,16 +63,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             transition={{ delay: 0.3, duration: 0.8 }}
             className="flex flex-wrap justify-center gap-4 mt-12"
           >
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium">
+            <div className="bg-white dark:bg-gray-800 backdrop-blur-sm px-5 py-3 rounded-full text-sm font-bold text-gray-900 dark:text-white shadow-md border border-gray-200 dark:border-gray-700">
               ✨ 100% Free Mode
             </div>
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium">
+            <div className="bg-white dark:bg-gray-800 backdrop-blur-sm px-5 py-3 rounded-full text-sm font-bold text-gray-900 dark:text-white shadow-md border border-gray-200 dark:border-gray-700">
               🚀 No API Key Required
             </div>
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium">
+            <div className="bg-white dark:bg-gray-800 backdrop-blur-sm px-5 py-3 rounded-full text-sm font-bold text-gray-900 dark:text-white shadow-md border border-gray-200 dark:border-gray-700">
               🎯 5 Art Styles
             </div>
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium">
+            <div className="bg-white dark:bg-gray-800 backdrop-blur-sm px-5 py-3 rounded-full text-sm font-bold text-gray-900 dark:text-white shadow-md border border-gray-200 dark:border-gray-700">
               ⚡ Instant Generation
             </div>
           </motion.div>
@@ -80,7 +80,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+      <section className="py-20 bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0 }}
@@ -89,10 +89,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-ghibli-dark-brown dark:text-white mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
               Why Creators Love Us
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
+            <p className="text-xl text-gray-700 dark:text-gray-300 font-medium">
               Everything you need to bring your 3D printing ideas to life
             </p>
           </motion.div>
@@ -105,13 +105,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
-                className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow"
+                className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all border border-gray-200 dark:border-gray-700"
               >
                 <div className="text-5xl mb-4">{feature.icon}</div>
-                <h3 className="text-2xl font-bold text-ghibli-dark-brown dark:text-white mb-3">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400">
+                <p className="text-gray-700 dark:text-gray-300 font-medium">
                   {feature.description}
                 </p>
               </motion.div>
@@ -121,7 +121,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       </section>
 
       {/* Art Styles Showcase */}
-      <section className="py-20">
+      <section className="py-20 bg-gradient-to-br from-amber-50 via-orange-50 to-emerald-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0 }}
@@ -129,10 +129,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-ghibli-dark-brown dark:text-white mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
               5 Stunning Art Styles
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
+            <p className="text-xl text-gray-700 dark:text-gray-300 font-medium">
               From whimsical Ghibli to action-packed figures
             </p>
           </motion.div>
@@ -145,10 +145,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-gradient-to-br from-white to-ghibli-tan/20 dark:from-gray-800 dark:to-gray-700 p-6 rounded-xl shadow-lg text-center"
+                className="bg-white dark:from-gray-800 dark:to-gray-700 p-6 rounded-xl shadow-xl hover:shadow-2xl transition-all text-center border border-gray-200 dark:border-gray-700"
               >
                 <div className="text-4xl mb-3">{style.emoji}</div>
-                <h4 className="font-bold text-ghibli-dark-brown dark:text-white">
+                <h4 className="font-bold text-gray-900 dark:text-white text-lg">
                   {style.name}
                 </h4>
               </motion.div>
@@ -158,7 +158,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       </section>
 
       {/* Pricing Section */}
-      <section id="pricing" className="py-20 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+      <section id="pricing" className="py-20 bg-white dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0 }}
@@ -166,10 +166,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-ghibli-dark-brown dark:text-white mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
               Simple, Transparent Pricing
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400">
+            <p className="text-xl text-gray-700 dark:text-gray-300 font-medium">
               Start free, upgrade when you need more power
             </p>
           </motion.div>
@@ -182,30 +182,30 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className={`relative bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-lg ${
-                  tier.popular ? 'ring-4 ring-ghibli-sage scale-105' : ''
+                className={`relative bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 p-8 rounded-2xl shadow-xl border-2 ${
+                  tier.popular ? 'border-emerald-500 scale-105' : 'border-gray-200 dark:border-gray-700'
                 }`}
               >
                 {tier.popular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-ghibli-sage to-ghibli-brown text-white px-4 py-1 rounded-full text-sm font-semibold">
+                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-emerald-600 to-amber-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg">
                     Most Popular
                   </div>
                 )}
                 <div className="text-center mb-6">
                   <div className="text-5xl mb-4">{tier.icon}</div>
-                  <h3 className="text-2xl font-bold text-ghibli-dark-brown dark:text-white mb-2">
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                     {tier.name}
                   </h3>
-                  <div className="text-4xl font-bold text-ghibli-brown dark:text-ghibli-sage mb-2">
+                  <div className="text-4xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">
                     {tier.price}
                   </div>
-                  <p className="text-gray-600 dark:text-gray-400">{tier.period}</p>
+                  <p className="text-gray-700 dark:text-gray-300 font-medium">{tier.period}</p>
                 </div>
                 <ul className="space-y-3 mb-8">
                   {tier.features.map((feature, i) => (
                     <li key={i} className="flex items-start">
-                      <span className="text-green-500 mr-2">✓</span>
-                      <span className="text-gray-700 dark:text-gray-300">{feature}</span>
+                      <span className="text-emerald-600 dark:text-emerald-400 mr-2 font-bold">✓</span>
+                      <span className="text-gray-800 dark:text-gray-200 font-medium">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -213,10 +213,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={tier.action}
-                  className={`w-full py-3 rounded-lg font-semibold transition-all ${
+                  className={`w-full py-3 rounded-lg font-bold transition-all ${
                     tier.popular
-                      ? 'bg-gradient-to-r from-ghibli-sage to-ghibli-brown text-white shadow-lg'
-                      : 'bg-gray-200 dark:bg-gray-700 text-ghibli-dark-brown dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600'
+                      ? 'bg-gradient-to-r from-emerald-600 to-amber-600 text-white shadow-xl'
+                      : 'bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100 shadow-lg'
                   }`}
                 >
                   {tier.cta}
@@ -228,24 +228,24 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20">
+      <section className="py-20 bg-gradient-to-br from-amber-50 via-orange-50 to-emerald-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-ghibli-dark-brown dark:text-white mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               Ready to Create Magic?
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
+            <p className="text-xl text-gray-800 dark:text-gray-200 mb-8 font-medium">
               Join thousands of creators bringing their 3D printing ideas to life
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onGetStarted}
-              className="px-12 py-5 bg-gradient-to-r from-ghibli-sage to-ghibli-brown text-white text-xl font-bold rounded-full shadow-2xl hover:shadow-3xl transition-all"
+              className="px-12 py-5 bg-gradient-to-r from-emerald-600 to-amber-600 text-white text-xl font-bold rounded-full shadow-2xl hover:shadow-3xl transition-all"
             >
               Start Creating Free 🚀
             </motion.button>
@@ -254,21 +254,21 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-ghibli-dark-brown dark:bg-gray-900 text-white py-12">
+      <footer className="bg-gray-900 dark:bg-black text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <h4 className="font-bold text-lg mb-4">Ghibli Trinkets</h4>
-              <p className="text-gray-400 text-sm">
+              <h4 className="font-bold text-lg mb-4 text-white">Ghibli Trinkets</h4>
+              <p className="text-gray-300 text-sm font-medium">
                 AI-powered 3D printable concept art generator
               </p>
             </div>
             <div>
-              <h4 className="font-bold text-lg mb-4">Product</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="#features" className="hover:text-white">Features</a></li>
-                <li><a href="#pricing" className="hover:text-white">Pricing</a></li>
-                <li><a href="#" className="hover:text-white">Documentation</a></li>
+              <h4 className="font-bold text-lg mb-4 text-white">Product</h4>
+              <ul className="space-y-2 text-sm text-gray-300">
+                <li><button type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="hover:text-white font-medium">Get Started</button></li>
+                <li><a href="#pricing" className="hover:text-white font-medium">Pricing</a></li>
+                <li><a href="https://github.com/MfFischer/ghibli-3d-printable-ai-generator#readme" target="_blank" rel="noopener noreferrer" className="hover:text-white font-medium">Documentation</a></li>
               </ul>
             </div>
             <div>
@@ -294,9 +294,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             <div>
               <h4 className="font-bold text-lg mb-4">Connect</h4>
               <ul className="space-y-2 text-sm text-gray-400">
-                <li><a href="https://github.com" className="hover:text-white">GitHub</a></li>
-                <li><a href="#" className="hover:text-white">Discord</a></li>
-                <li><a href="#" className="hover:text-white">Twitter</a></li>
+                <li><a href="https://github.com/MfFischer/ghibli-3d-printable-ai-generator" target="_blank" rel="noopener noreferrer" className="hover:text-white font-medium">GitHub</a></li>
+                <li><a href="mailto:contact@ghibli-trinkets.app" className="hover:text-white font-medium">Email Us</a></li>
               </ul>
             </div>
           </div>
@@ -320,9 +319,9 @@ const features = [
     description: 'Unlimited text-to-image generation with Pollinations.ai. No credit card, no API key, no limits.'
   },
   {
-    icon: '✨',
-    title: 'Premium Power',
-    description: 'Upgrade to TRUE image-to-image transformation with fal.ai FLUX.1. Free credits included!'
+    icon: '🔑',
+    title: 'Optional Gemini API',
+    description: 'Add your free Google Gemini API key for alternative AI generation. Still 100% free!'
   },
   {
     icon: '🎨',
@@ -341,38 +340,22 @@ const artStyles = [
 
 const pricingTiers = [
   {
-    name: 'Free',
+    name: 'Web App',
     price: '$0',
-    period: 'Forever',
-    icon: '🆓',
-    popular: false,
-    cta: 'Start Free',
+    period: 'Forever Free',
+    icon: '🌐',
+    popular: true,
+    cta: 'Start Creating',
     action: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
     features: [
       'Unlimited text-to-image generation',
-      'Reference mode (describe images)',
-      '5 art styles',
-      'Web app access',
-      'No API key required',
-      'Community support'
-    ]
-  },
-  {
-    name: 'Premium',
-    price: 'Free Credits',
-    period: 'Then pay-as-you-go',
-    icon: '✨',
-    popular: true,
-    cta: 'Get Free Credits',
-    action: () => window.open('https://fal.ai/', '_blank'),
-    features: [
-      'Everything in Free',
-      'TRUE image-to-image transformation',
-      'FLUX.1 AI model',
-      'Higher quality results',
-      'Direct image transformation',
-      'Free credits included',
-      'Priority support'
+      '5 stunning art styles',
+      'Powered by Pollinations.ai',
+      'Optional Gemini API support',
+      'No credit card required',
+      'No API key required (default)',
+      'Download high-res images',
+      'Generation history'
     ]
   },
   {
@@ -382,15 +365,16 @@ const pricingTiers = [
     icon: '💻',
     popular: false,
     cta: 'Coming Soon',
-    action: () => alert('Desktop version coming soon! Join our waitlist.'),
+    action: () => alert('Desktop version coming soon! Join our waitlist at contact@ghibli-trinkets.app'),
     features: [
-      'Everything in Premium',
-      'Offline mode',
-      'Self-executable file',
-      'No internet required',
+      'Everything in Web App',
+      'Offline mode (no internet needed)',
+      'Self-executable application',
+      'Windows, Mac, Linux support',
+      'Faster local generation',
       'Lifetime updates',
-      'Local AI processing',
-      'Privacy-first'
+      'Privacy-first (data stays local)',
+      'One-time payment, no subscription'
     ]
   }
 ];

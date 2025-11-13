@@ -22,11 +22,11 @@
 - **Modern Anime**: Vibrant Japanese anime with dynamic angles
 - **Action Figure**: Collectible toy design with articulated joints
 
-### 🖼️ **Dual Input Modes**
-- **Text-to-Image**: Describe your creation and generate from scratch
-- **Reference Image Mode**: Upload a photo and describe it - AI recreates it in your chosen style
+### 🖼️ **Text-to-Image Generation**
+- **Simple & Free**: Describe your creation and generate from scratch
 - **100% FREE**: Uses Pollinations.ai - no API keys required!
 - **Unlimited Usage**: Generate as many images as you want
+- **No Sign-up**: Start creating immediately
 
 ### 🎯 **3D Printing Ready**
 - **PNG Export**: High-quality concept art images

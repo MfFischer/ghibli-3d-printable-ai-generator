@@ -22,48 +22,64 @@ const HomeIcon = () => (
 
 export const Header: React.FC<HeaderProps> = ({ onOpenSettings, onBackToHome }) => {
   return (
-    <header className="text-center relative">
-      {/* Left side - Back to Home button */}
-      {onBackToHome && (
-        <div className="absolute left-0 top-0">
-          <button
-            type="button"
-            onClick={onBackToHome}
-            className="flex items-center gap-2 px-3 py-2 text-ghibli-brown dark:text-gray-300 hover:text-ghibli-dark-brown dark:hover:text-white hover:bg-ghibli-tan/30 dark:hover:bg-gray-700 rounded-lg transition-all duration-200"
-            aria-label="Back to home"
-            title="Back to Home"
-          >
-            <HomeIcon />
-            <span className="text-sm font-medium hidden sm:inline">Home</span>
-          </button>
+    <header className="w-full">
+      {/* Top navigation bar */}
+      <div className="flex items-center justify-between mb-6 pb-4 border-b border-ghibli-tan/20 dark:border-gray-700">
+        {/* Left side - Back to Home button */}
+        <div className="flex-shrink-0">
+          {onBackToHome ? (
+            <button
+              type="button"
+              onClick={onBackToHome}
+              className="flex items-center gap-2 px-4 py-2 bg-ghibli-tan/30 dark:bg-gray-700 text-ghibli-dark-brown dark:text-white hover:bg-ghibli-tan/50 dark:hover:bg-gray-600 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+              aria-label="Back to home"
+              title="Back to Home"
+            >
+              <HomeIcon />
+              <span className="text-sm font-semibold">Home</span>
+            </button>
+          ) : (
+            <div className="w-24"></div>
+          )}
         </div>
-      )}
 
-      {/* Right side - Theme toggle and Settings */}
-      <div className="absolute right-0 top-0 flex gap-2">
-        <ThemeToggle />
-        {onOpenSettings && (
-          <button
-            type="button"
-            onClick={onOpenSettings}
-            className="p-2 text-ghibli-brown dark:text-gray-300 hover:text-ghibli-dark-brown dark:hover:text-white hover:bg-ghibli-tan/30 dark:hover:bg-gray-700 rounded-lg transition-all duration-200"
-            aria-label="Open settings"
-            title="Settings"
-          >
-            <SettingsIcon />
-          </button>
-        )}
+        {/* Center - Title (hidden on mobile, shown on larger screens) */}
+        <div className="hidden md:block text-center flex-grow">
+          <h2 className="text-xl font-bold text-ghibli-dark-brown dark:text-gray-100">
+            Ghibli-esque Trinkets
+          </h2>
+        </div>
+
+        {/* Right side - Theme toggle and Settings */}
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <ThemeToggle />
+          {onOpenSettings && (
+            <button
+              type="button"
+              onClick={onOpenSettings}
+              className="p-2 bg-ghibli-tan/30 dark:bg-gray-700 text-ghibli-dark-brown dark:text-white hover:bg-ghibli-tan/50 dark:hover:bg-gray-600 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md"
+              aria-label="Open settings"
+              title="Settings"
+            >
+              <SettingsIcon />
+            </button>
+          )}
+        </div>
       </div>
-      <div className="flex items-center justify-center gap-3">
-        <LeafIcon className="w-8 h-8 text-ghibli-dark-green dark:text-green-400" />
-        <h1 className="text-3xl sm:text-4xl font-bold text-ghibli-dark-brown dark:text-gray-100">
-          Ghibli-esque Trinkets
-        </h1>
-        <LeafIcon className="w-8 h-8 text-ghibli-dark-green dark:text-green-400 transform -scale-x-100" />
+
+      {/* Main title section */}
+      <div className="text-center">
+        <div className="flex items-center justify-center gap-3">
+          <LeafIcon className="w-8 h-8 text-ghibli-dark-green dark:text-green-400" />
+          <h1 className="text-3xl sm:text-4xl font-bold text-ghibli-dark-brown dark:text-gray-100">
+            Ghibli-esque Trinkets
+          </h1>
+          <LeafIcon className="w-8 h-8 text-ghibli-dark-green dark:text-green-400 transform -scale-x-100" />
+        </div>
+        <p className="mt-2 text-md sm:text-lg text-ghibli-brown dark:text-gray-400">
+          Generate ideas for charming 3D-printable creations.
+        </p>
       </div>
-      <p className="mt-2 text-md sm:text-lg text-ghibli-brown dark:text-gray-400">
-        Generate ideas for charming 3D-printable creations.
-      </p>
     </header>
   );
 };

@@ -21,7 +21,7 @@ export const ThemeToggle: React.FC = () => {
     <motion.button
       type="button"
       onClick={toggleTheme}
-      className="p-2 rounded-lg bg-ghibli-tan/30 dark:bg-gray-700 hover:bg-ghibli-tan/50 dark:hover:bg-gray-600 transition-colors"
+      className="p-2 rounded-lg bg-ghibli-tan/30 dark:bg-gray-700 text-ghibli-dark-brown dark:text-white hover:bg-ghibli-tan/50 dark:hover:bg-gray-600 transition-all duration-200 shadow-sm hover:shadow-md"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}

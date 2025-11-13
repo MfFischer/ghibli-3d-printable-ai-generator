@@ -4,6 +4,7 @@ import { ThemeToggle } from './ThemeToggle';
 
 interface HeaderProps {
   onOpenSettings?: () => void;
+  onBackToHome?: () => void;
 }
 
 const SettingsIcon = () => (
@@ -13,9 +14,32 @@ const SettingsIcon = () => (
   </svg>
 );
 
-export const Header: React.FC<HeaderProps> = ({ onOpenSettings }) => {
+const HomeIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+  </svg>
+);
+
+export const Header: React.FC<HeaderProps> = ({ onOpenSettings, onBackToHome }) => {
   return (
     <header className="text-center relative">
+      {/* Left side - Back to Home button */}
+      {onBackToHome && (
+        <div className="absolute left-0 top-0">
+          <button
+            type="button"
+            onClick={onBackToHome}
+            className="flex items-center gap-2 px-3 py-2 text-ghibli-brown dark:text-gray-300 hover:text-ghibli-dark-brown dark:hover:text-white hover:bg-ghibli-tan/30 dark:hover:bg-gray-700 rounded-lg transition-all duration-200"
+            aria-label="Back to home"
+            title="Back to Home"
+          >
+            <HomeIcon />
+            <span className="text-sm font-medium hidden sm:inline">Home</span>
+          </button>
+        </div>
+      )}
+
+      {/* Right side - Theme toggle and Settings */}
       <div className="absolute right-0 top-0 flex gap-2">
         <ThemeToggle />
         {onOpenSettings && (
